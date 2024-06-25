@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Associations
   has_secure_password
+  has_many :photos, dependent: :destroy
+  has_one_attached :avatar
 
   # Validations
   validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i}

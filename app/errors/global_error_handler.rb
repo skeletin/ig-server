@@ -16,6 +16,10 @@ module GlobalErrorHandler
       rescue_from UnauthenticatedError do |exception|
         render json: ResponseEntity.error(message: -> { exception.message }, errors: ["Please log in"]), status: :forbidden
       end
+
+      rescue_from UnauthorizedError do |exception|
+        render json: ResponseEntity.error(message: -> { exception.message }, errors: ["Unauthorized"]), status: :unauthorized
+      end
     end
   end
 end
