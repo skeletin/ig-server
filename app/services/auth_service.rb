@@ -17,16 +17,22 @@ class AuthService < ApplicationService
   end
 
   def verify_email(user_params)
-    cached_passcode = Rails.cache.read(user_params[:email])
+    # cached_passcode = Rails.cache.read(user_params[:email])
+    cached_passcode = CacheService.read(user_params[:email])
     raise InvalidOtpError unless cached_passcode == user_params[:passcode]
     register(user_params)
+  end
+
+  def is_authenticated(request)
+    decode_token(request)
   end
   
   private
   
   def genrate_otp(email)
     otp = rand(100_000..999_999).to_s
-    Rails.cache.write(email, otp) 
+    CacheService.write(email, otp)
+    # Rails.cache.write(email, otp)
     email
   end
 

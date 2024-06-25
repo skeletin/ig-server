@@ -6,9 +6,11 @@ Rails.application.routes.draw do
         get "/auth/logged_in", to: "auth#logged_in"
         post "/auth/send_otp_email", to: "auth#send_otp_email"
         post "/auth/verify_email", to: "auth#verify_email"
+        get "/auth/is_authenticated", to: "auth#is_authenticated"
 
       # Test Endpoints
       get "/test/redis", to: "test#redis"
+      post "/test/redis/read_email_value", to: "test#read_email_value"
     end
   end
 end

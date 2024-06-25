@@ -1,6 +1,4 @@
 class Api::V1::AuthController < ApplicationController
-  include OtpSender
-
   skip_before_action :authorized?
 
   def initialize(auth_service: AuthService.new)
@@ -16,11 +14,18 @@ class Api::V1::AuthController < ApplicationController
   end
 
   def send_otp_email
-    render json: ResponseEntity.success(data: @auth_service.cache_email(user_params[:email]) , message: -> {"Email received"}), status: :ok
+    email = user_params[:email]
+    @auth_service.cache_email(email)
+    OtpMailer.send_otp_email(email).deliver_later
+    render json: ResponseEntity.success(data: email, message: -> { "Email received" }), status: :ok
   end
 
   def verify_email
     render json: ResponseEntity.success(data: @auth_service.verify_email(user_params), message: -> {"Email verified"}), status: :ok 
+  end
+
+  def is_authenticated
+    render json: ResponseEntity.success(data: @auth_service.is_authenticated(request), message: -> { "User is logged in"}), status: :ok
   end
 
   private

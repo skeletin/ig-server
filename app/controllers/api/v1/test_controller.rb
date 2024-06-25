@@ -9,4 +9,9 @@ class Api::V1::TestController < ApplicationController
         Rails.cache.write("test", "key")
         render json: Rails.cache.read("test")
     end
+
+    def read_email_value
+        Rails.cache.write("email", params[:email])
+        render json: Rails.cache.read("email")
+    end
 end

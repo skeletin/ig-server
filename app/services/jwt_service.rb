@@ -25,6 +25,6 @@ module JWTService
   def get_current_user(decoded_token)
     user_id = decoded_token[0]['user_id']
     @user = User.find_by(id: user_id)
-    @user ? @user : raise(UnauthenticatedError)
+    @user ? Api::V1::UserSerializer.new(@user) : raise(UnauthenticatedError)
   end
 end
