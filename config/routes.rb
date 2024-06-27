@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       post "/test/redis/read_email_value", to: "test#read_email_value"
       
       # Photo Routes
-      post "/upload/photos", to: "photos#upload"
+      post "/upload/photos", to: "posts#upload"
     end
   end
 end

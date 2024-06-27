@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Associations
   has_secure_password
-  has_many :photos, dependent: :destroy
+  has_many :posts, dependent: :destroy
   has_one_attached :avatar
 
   # Validations
