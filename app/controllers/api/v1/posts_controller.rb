@@ -7,6 +7,14 @@ class Api::V1::PostsController < ApplicationController
         render json: ResponseEntity.success(data: @post_service.upload(current_user, post_params), message: -> {"posts uploaded"}), status: :created
     end
 
+    def user_posts
+        render json: ResponseEntity.success(data: @post_service.user_posts(params), message: -> {"Successfully fetched user posts "}), status: :ok
+    end
+
+    def get_post
+        render json: ResponseEntity.success(data: @post_service.get_post(params), message: -> {"Successfully fetched user post "}), status: :ok
+    end
+
 
     private 
     def post_params

@@ -1,5 +1,5 @@
 class Api::V1::PostSerializer < ActiveModel::Serializer
-    attributes :id, :image_url, :caption
+    attributes :id, :image_url, :caption, :date
     include Rails.application.routes.url_helpers
   
     def attributes(*args)
@@ -8,6 +8,10 @@ class Api::V1::PostSerializer < ActiveModel::Serializer
     end
 
     def image_url
-        url_for(object.image)
+        object.image.present? ? url_for(object.image) : nil
+    end
+
+    def date
+        object.created_at.strftime("%B %d")
     end
 end
