@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "User", type: :request do
   describe "POST /auth/register" do
     context 'with valid parameters' do
-      before do
+      before(:each) do
         post '/api/v1/auth/register', params: {
           user: {
             email: Faker::Internet.email,
